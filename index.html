@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>System Monitor Dashboard</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="header-content">
+                <h1>💻 System Monitor Dashboard</h1>
+                <div class="status-indicator">
+                    <span class="status-dot"></span>
+                    <span>Live Monitoring</span>
+                </div>
+            </div>
+        </header>
+
+        <div class="dashboard-grid">
+            <!-- CPU Monitor -->
+            <div class="monitor-card cpu-card">
+                <div class="card-header">
+                    <h2>🖥️ CPU Usage</h2>
+                    <span class="update-time" id="cpu-update">Updating...</span>
+                </div>
+                <div class="gauge-container">
+                    <svg class="circular-gauge" viewBox="0 0 200 200">
+                        <circle class="gauge-bg" cx="100" cy="100" r="80"></circle>
+                        <circle class="gauge-progress" id="cpu-gauge" cx="100" cy="100" r="80"></circle>
+                    </svg>
+                    <div class="gauge-value">
+                        <span id="cpu-value">0</span>
+                        <span class="gauge-unit">%</span>
+                    </div>
+                </div>
+                <div class="metric-details">
+                    <div class="metric-item">
+                        <span class="metric-label">Cores</span>
+                        <span class="metric-value" id="cpu-cores">-</span>
+                    </div>
+                    <div class="metric-item">
+                        <span class="metric-label">Temperature</span>
+                        <span class="metric-value" id="cpu-temp">-</span>
+                    </div>
+                    <div class="metric-item">
+                        <span class="metric-label">Speed</span>
+                        <span class="metric-value" id="cpu-speed">-</span>
+                    </div>
+                </div>
+                <canvas id="cpu-chart" class="mini-chart"></canvas>
+            </div>
+
+            <!-- RAM Monitor -->
+            <div class="monitor-card ram-card">
+                <div class="card-header">
+                    <h2>🧠 Memory Usage</h2>
+                    <span class="update-time" id="ram-update">Updating...</span>
+                </div>
+                <div class="gauge-container">
+                    <svg class="circular-gauge" viewBox="0 0 200 200">
+                        <circle class="gauge-bg" cx="100" cy="100" r="80"></circle>
+                        <circle class="gauge-progress ram-progress" id="ram-gauge" cx="100" cy="100" r="80"></circle>
+                    </svg>
+                    <div class="gauge-value">
+                        <span id="ram-value">0</span>
+                        <span class="gauge-unit">%</span>
+                    </div>
+                </div>
+                <div class="metric-details">
+                    <div class="metric-item">
+                        <span class="metric-label">Used</span>
+                        <span class="metric-value" id="ram-used">-</span>
+                    </div>
+                    <div class="metric-item">
+                        <span class="metric-label">Total</span>
+                        <span class="metric-value" id="ram-total">-</span>
+                    </div>
+                    <div class="metric-item">
+                        <span class="metric-label">Available</span>
+                        <span class="metric-value" id="ram-available">-</span>
+                    </div>
+                </div>
+                <canvas id="ram-chart" class="mini-chart"></canvas>
+            </div>
+
+            <!-- Disk Usage -->
+            <div class="monitor-card disk-card">
+                <div class="card-header">
+                    <h2>💾 Disk Usage</h2>
+                </div>
+                <div class="disk-info">
+                    <div class="disk-bar-container">
+                        <div class="disk-bar">
+                            <div class="disk-bar-fill" id="disk-bar"></div>
+                        </div>
+                        <div class="disk-percentage" id="disk-percentage">0%</div>
+                    </div>
+                    <div class="disk-details">
+                        <div class="disk-detail-item">
+                            <span class="disk-label">Used</span>
+                            <span class="disk-value" id="disk-used">-</span>
+                        </div>
+                        <div class="disk-detail-item">
+                            <span class="disk-label">Free</span>
+                            <span class="disk-value" id="disk-free">-</span>
+                        </div>
+                        <div class="disk-detail-item">
+                            <span class="disk-label">Total</span>
+                            <span class="disk-value" id="disk-total">-</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Network Monitor -->
+            <div class="monitor-card network-card">
+                <div class="card-header">
+                    <h2>🌐 Network Activity</h2>
+                </div>
+                <div class="network-stats">
+                    <div class="network-stat">
+                        <div class="network-icon upload">⬆️</div>
+                        <div class="network-info">
+                            <span class="network-label">Upload</span>
+                            <span class="network-value" id="upload-speed">0 KB/s</span>
+                        </div>
+                    </div>
+                    <div class="network-stat">
+                        <div class="network-icon download">⬇️</div>
+                        <div class="network-info">
+                            <span class="network-label">Download</span>
+                            <span class="network-value" id="download-speed">0 KB/s</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="network-totals">
+                    <div class="network-total-item">
+                        <span>Total Sent</span>
+                        <span id="total-upload">0 MB</span>
+                    </div>
+                    <div class="network-total-item">
+                        <span>Total Received</span>
+                        <span id="total-download">0 MB</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- System Info -->
+            <div class="monitor-card system-card">
+                <div class="card-header">
+                    <h2>ℹ️ System Information</h2>
+                </div>
+                <div class="system-info-grid">
+                    <div class="info-item">
+                        <span class="info-label">Operating System</span>
+                        <span class="info-value" id="os-name">-</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">Browser</span>
+                        <span class="info-value" id="browser-name">-</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">Screen Resolution</span>
+                        <span class="info-value" id="screen-res">-</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">User Agent</span>
+                        <span class="info-value" id="user-agent">-</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">Uptime</span>
+                        <span class="info-value" id="uptime">-</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">Time Zone</span>
+                        <span class="info-value" id="timezone">-</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Processes (Simulated) -->
+            <div class="monitor-card processes-card">
+                <div class="card-header">
+                    <h2>⚙️ Top Processes</h2>
+                </div>
+                <div class="processes-table">
+                    <div class="process-header">
+                        <span>Process</span>
+                        <span>CPU %</span>
+                        <span>Memory</span>
+                    </div>
+                    <div id="processes-list" class="processes-list">
+                        <!-- Processes will be dynamically added -->
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="info-note">
+            <p>📝 <strong>Note:</strong> This is a simulated system monitor for demonstration purposes. In a browser environment, actual system metrics are limited for security reasons. The displayed values simulate real system monitoring behavior.</p>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

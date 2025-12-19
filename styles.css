@@ -1,0 +1,401 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+    background: #0f0f23;
+    color: #e0e0e0;
+    min-height: 100vh;
+    padding: 20px;
+}
+
+.container {
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+header {
+    margin-bottom: 2rem;
+}
+
+.header-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+
+h1 {
+    font-size: 2.5rem;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.status-indicator {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.5rem 1rem;
+    background: rgba(102, 126, 234, 0.1);
+    border-radius: 20px;
+    border: 1px solid rgba(102, 126, 234, 0.3);
+}
+
+.status-dot {
+    width: 10px;
+    height: 10px;
+    background: #4ade80;
+    border-radius: 50%;
+    animation: pulse 2s ease-in-out infinite;
+}
+
+@keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.5; }
+}
+
+.dashboard-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+}
+
+.monitor-card {
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 15px;
+    padding: 1.5rem;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.monitor-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 30px rgba(102, 126, 234, 0.3);
+}
+
+.card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+}
+
+.card-header h2 {
+    font-size: 1.3rem;
+    color: #e0e0e0;
+}
+
+.update-time {
+    font-size: 0.8rem;
+    color: #888;
+}
+
+/* Circular Gauge */
+.gauge-container {
+    position: relative;
+    width: 200px;
+    height: 200px;
+    margin: 0 auto 1.5rem;
+}
+
+.circular-gauge {
+    transform: rotate(-90deg);
+}
+
+.gauge-bg {
+    fill: none;
+    stroke: rgba(255, 255, 255, 0.1);
+    stroke-width: 15;
+}
+
+.gauge-progress {
+    fill: none;
+    stroke: url(#cpuGradient);
+    stroke-width: 15;
+    stroke-linecap: round;
+    stroke-dasharray: 502;
+    stroke-dashoffset: 502;
+    transition: stroke-dashoffset 0.5s ease;
+}
+
+.ram-progress {
+    stroke: url(#ramGradient);
+}
+
+.gauge-value {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+}
+
+.gauge-value span:first-child {
+    font-size: 3rem;
+    font-weight: 700;
+    color: #667eea;
+}
+
+.gauge-unit {
+    font-size: 1.5rem;
+    color: #888;
+}
+
+.metric-details {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+    margin-bottom: 1rem;
+}
+
+.metric-item {
+    text-align: center;
+    padding: 0.8rem;
+    background: rgba(255, 255, 255, 0.03);
+    border-radius: 8px;
+}
+
+.metric-label {
+    display: block;
+    font-size: 0.8rem;
+    color: #888;
+    margin-bottom: 0.3rem;
+}
+
+.metric-value {
+    display: block;
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #e0e0e0;
+}
+
+.mini-chart {
+    width: 100%;
+    height: 60px;
+    margin-top: 1rem;
+}
+
+/* Disk Usage */
+.disk-info {
+    padding: 1rem 0;
+}
+
+.disk-bar-container {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+}
+
+.disk-bar {
+    flex: 1;
+    height: 30px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 15px;
+    overflow: hidden;
+}
+
+.disk-bar-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
+    border-radius: 15px;
+    transition: width 0.5s ease;
+    width: 0%;
+}
+
+.disk-percentage {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #667eea;
+    min-width: 60px;
+}
+
+.disk-details {
+    display: flex;
+    justify-content: space-around;
+}
+
+.disk-detail-item {
+    text-align: center;
+}
+
+.disk-label {
+    display: block;
+    font-size: 0.9rem;
+    color: #888;
+    margin-bottom: 0.3rem;
+}
+
+.disk-value {
+    display: block;
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: #e0e0e0;
+}
+
+/* Network Stats */
+.network-stats {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+}
+
+.network-stat {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1rem;
+    background: rgba(255, 255, 255, 0.03);
+    border-radius: 10px;
+}
+
+.network-icon {
+    font-size: 2rem;
+}
+
+.network-info {
+    flex: 1;
+}
+
+.network-label {
+    display: block;
+    font-size: 0.9rem;
+    color: #888;
+    margin-bottom: 0.3rem;
+}
+
+.network-value {
+    display: block;
+    font-size: 1.3rem;
+    font-weight: 600;
+    color: #e0e0e0;
+}
+
+.network-totals {
+    display: flex;
+    justify-content: space-around;
+    padding-top: 1rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.network-total-item {
+    text-align: center;
+}
+
+.network-total-item span:first-child {
+    display: block;
+    font-size: 0.85rem;
+    color: #888;
+    margin-bottom: 0.3rem;
+}
+
+.network-total-item span:last-child {
+    display: block;
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #667eea;
+}
+
+/* System Info */
+.system-info-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1rem;
+}
+
+.info-item {
+    display: flex;
+    justify-content: space-between;
+    padding: 1rem;
+    background: rgba(255, 255, 255, 0.03);
+    border-radius: 8px;
+}
+
+.info-label {
+    color: #888;
+    font-size: 0.9rem;
+}
+
+.info-value {
+    color: #e0e0e0;
+    font-weight: 600;
+    text-align: right;
+    max-width: 60%;
+    word-break: break-word;
+}
+
+/* Processes */
+.processes-table {
+    font-size: 0.9rem;
+}
+
+.process-header {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr;
+    gap: 1rem;
+    padding: 0.8rem;
+    background: rgba(102, 126, 234, 0.1);
+    border-radius: 8px;
+    margin-bottom: 0.5rem;
+    font-weight: 600;
+}
+
+.processes-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.process-item {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr;
+    gap: 1rem;
+    padding: 0.8rem;
+    background: rgba(255, 255, 255, 0.03);
+    border-radius: 8px;
+    transition: background 0.3s;
+}
+
+.process-item:hover {
+    background: rgba(255, 255, 255, 0.05);
+}
+
+.info-note {
+    background: rgba(102, 126, 234, 0.1);
+    border: 1px solid rgba(102, 126, 234, 0.3);
+    border-radius: 10px;
+    padding: 1.5rem;
+    text-align: center;
+    color: #888;
+}
+
+.info-note strong {
+    color: #667eea;
+}
+
+@media (max-width: 768px) {
+    h1 {
+        font-size: 2rem;
+    }
+    
+    .dashboard-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .metric-details {
+        grid-template-columns: 1fr;
+    }
+    
+    .network-stats {
+        grid-template-columns: 1fr;
+    }
+}
